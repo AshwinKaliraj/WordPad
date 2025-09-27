@@ -48,3 +48,9 @@ header p {
     color: red;
     margin-top: 5px;
 }
+footer {
+    text-align: center;
+    font-size: 13px;
+    color: red;
+    padding: 20px 0;
+}
