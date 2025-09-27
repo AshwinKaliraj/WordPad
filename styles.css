@@ -1,9 +1,9 @@
 body{
     font-family: 'Times New Roman', Times, serif;
     margin: 40px auto;
-    max-width:1100px;
+    max-width:10000px;
     background-color: black;
-    color: black;
+    color:black;
     line-height: 1.6;
 }
 #content-editor{
@@ -11,10 +11,11 @@ body{
     padding: 25px;
     border: 1px azure;
     border-radius: 10px;
-    background-color: azure;
+    background-color: antiquewhite;
     outline: none;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     transition: border-color 0.3s;
+    margin-top: -25px;
 }
 #content-editor:focus{
     border-color: aqua;
@@ -35,6 +36,7 @@ header {
     text-align: center;
     margin-top: -40px;
     margin-bottom: -10px;
+    margin-top: -60px;
 }
 
 h1 {
@@ -53,4 +55,16 @@ footer {
     font-size: 13px;
     color: red;
     padding: 20px 0;
+}
+.toolbar button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+}
+.toolbar button:hover {
+    background-color: black;
 }
