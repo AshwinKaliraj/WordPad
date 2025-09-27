@@ -34,7 +34,12 @@
                    <option value="Verdana, sans-serif">Verdana</option>
 
             </select>
-
+            <div><button onclick="doceditor.align('left')" title="Align Left">🡸</button>
+            <button onclick="doceditor.align('center')" title="Align Center">🡺🡸</button>
+            <button onclick="doceditor.align('right')" title="Align Right">🡺</button>
+            <button onclick="doceditor.align('justify')" title="Justify">☰</button></div>
+             <input type="color" onchange="doceditor.colorText(this.value)" title="Text Color">
+             <input type="color" onchange="doceditor.highlightText(this.value)" title="Highlight">
         </div>
         </div>
    <script src="script.js"></script>
