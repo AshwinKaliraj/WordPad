@@ -10,10 +10,10 @@
             <p>Start your work here...</p>
         
         <div id="toolbar"class="toolbar">
-            <button onclick="docEditor.formatText('bold')"title="Bold"><b>B</b></button>
-            <button onclick="docEditor.formatText('italic')"title="Italic"><i>I</i></button>
-            <button onclick="docEditor.formatText('underline')"title="Underline"><u>U</u></button>
-            <select onchange="docEditor.changesize(this.value)"title="Font Size">
+            <button onclick="doceditor.formattext('bold')"title="Bold"><b>B</b></button>
+            <button onclick="doceditor.formattext('italic')"title="Italic"><i>I</i></button>
+            <button onclick="doceditor.formattext('underline')"title="Underline"><u>U</u></button>
+            <select onchange="doceditor.changesize(this.value)"title="Font Size">
                 <option value="">Size</option>
                 <option value="1">4</option>
                 <option value="2">6</option>
@@ -38,9 +38,20 @@
             <button onclick="doceditor.align('center')" title="Align Center">🡺🡸</button>
             <button onclick="doceditor.align('right')" title="Align Right">🡺</button>
             <button onclick="doceditor.align('justify')" title="Justify">☰</button></div>
-             <input type="color" onchange="doceditor.colorText(this.value)" title="Text Color">
-             <input type="color" onchange="doceditor.highlightText(this.value)" title="Highlight">
-        </div>
+             <input type="color" onchange="doceditor.colortext(this.value)" title="Text Color">
+             <input type="color" onchange="doceditor.highlighttext(this.value)" title="Highlight">
+             <button onclick="doceditor.formattext('insertOrderedList')" title="Numbered List">1.</button>
+             <button onclick="doceditor.formattext('insertUnorderedList')" title="Bullet List">•</button>
+             <button onclick="doceditor.formattext('outdent')" title="Outdent">⮜</button>
+             <button onclick="doceditor.formattext('indent')" title="Indent">⮞</button>
+             <button onclick="doceditor.inserthyperlink()" title="Insert Link">🌐</button>
+             <button onclick="doceditor.insertlocalimage()" title="Upload Image">🖼️</button>
+             <button onclick="doceditor.insertimageurl()" title="Image URL">📷</button>
+             <button onclick="doceditor.insertgrid()" title="Insert Table">▦</button>
+             <button onclick="doceditor.removerormatting()" title="Clear Formatting">⌫</button>
+             <button onclick="docEditor.clearContent()" title="Reset Editor">🔄</button>
+       
+            </div>
         </div>
    <script src="script.js"></script>
     </body>
