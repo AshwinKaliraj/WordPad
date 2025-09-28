@@ -1,4 +1,5 @@
 body{
+    background-image: url(image\ copy\ 3.png);
     font-family: 'Times New Roman', Times, serif;
     margin: 40px auto;
     max-width:950px;
@@ -47,13 +48,13 @@ h1 {
 
 header p {
     font-size: 15px;
-    color: red;
+    color: white;
     margin-top: 5px;
 }
 footer {
     text-align: center;
-    font-size: 13px;
-    color: red;
+    font-size: 20px;
+    color: white;
     padding: 20px 0;
 }
 .toolbar button {
@@ -73,7 +74,35 @@ footer {
     font-size: 14px;
     border: none;
     border-radius: 4px;
-    background-color: black;
+    background-color: green;
     color:aliceblue;
     cursor: pointer;
+}
+.toolbar input[type="color"]{
+    width: 35px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.toolbar input[type="text"]{
+    padding: 5px;
+    border: 1px solid blue;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    color: darkgray;
+}
+#content-editor .image-wrapper{
+    display: inline-block;
+    position: relative;
+    margin: 5px;
+    border: 1px lightblue;
+    border-radius: 3px;
+    padding: 2px;
+}
+#content-editor.image-wrapper.selected{
+    border: 1px lightblue;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
