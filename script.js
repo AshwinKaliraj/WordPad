@@ -20,6 +20,24 @@ class DocEditor{
             this.formatText('fontSize',size);
         }
     }
+     changeFont(font){
+        if (font){
+            this.formatText('fontName',font);
+        }
+    }
+
+    align(type){
+        this.formatText(`justify${type.charAt(0).toUpperCase()+type.slice(1)}`);
+    }
+
+    colorText(color){
+        this.formatText('foreColor',color);
+    }
+
+    highlightText(color){
+        this.formatText('hiliteColor',color);
+    }
+
 
 
 }
