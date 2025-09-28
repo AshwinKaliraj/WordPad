@@ -189,9 +189,66 @@ class DocEditor{
     }
 }
 
+class DocExporter{
+    constructor(editorInstance){
+        this.editor=editorInstance;
+    }
 
+    getDocInfo(){
+        const title=document.getElementById('document-title').value.trim()||'Untitled';
+        const author=document.getElementById('document-author').value.trim()||'Anonymous';
+        return{title,author};
+    }
+
+    exportPdf(){
+        const{title,author}=this.getDocInfo();
+        const exportDiv=document.createElement('div');
+        exportDiv.innerHTML=`<h1 style="font-family:Arial,sans-serif;color:#2c3e50">${title}</h1>
+            <p style="font-size:12px;color:#7f8c8d">By ${author}</p>
+            <hr style="border:0.5px solid #e0e0e0">
+            ${this.editor.getEditorContent()}
+        `;
+        
+        const pdfOptions={
+            margin:[0.5,0.5,1.2,0.5], 
+            filename:`${title}.pdf`,
+            image:{type:'jpeg',quality:0.98},
+            html2canvas:{scale:2},
+            jsPDF:{unit:'in',format:'letter',orientation:'portrait'}
+        };
+        
+        html2pdf().from(exportDiv).set(pdfOptions).toPdf().get('pdf').then((pdf)=>{
+            const totalPages=pdf.internal.getNumberOfPages();
+            for(let i=1;i<=totalPages;i++){
+                pdf.setPage(i);
+                pdf.setFont('helvetica','normal');
+                pdf.setFontSize(10);
+                pdf.setTextColor(120, 120, 120);
+                pdf.text(`Page ${i} of ${totalPages}`, pdf.internal.pageSize.getWidth()-1.2,pdf.internal.pageSize.getHeight()-0.4,{align:'right'});
+            }
+        }).save();
+    }
+
+    exportDoc(){
+        const{title,author}=this.getDocInfo();
+        const docContent= `
+            <!DOCTYPE html>
+            <html>
+            <head><meta charset="utf-8"></head>
+            <body>
+                <h1>${title}</h1>
+                <p>Author:${author}</p>
+                <hr>
+                ${this.editor.getEditorContent()}
+            </body>
+            </html>
+        `;
+        const docBlob=htmlDocx.asBlob(docContent);
+        saveAs(docBlob,`${title}.docx`);
+    }
+}
 
 const docEditor=new DocEditor('content-editor');
-
+const docExporter=new DocExporter(docEditor);
 
 
