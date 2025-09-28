@@ -96,27 +96,43 @@ class DocEditor{
     }
 
     insertGrid(){
-        const numRows=parseInt(prompt('Number of rows:'),10);
-        const numCols=parseInt(prompt('Number of columns:'),10);
-        if(isNaN(numRows)||isNaN(numCols)||numRows<1||numCols<1){
-            alert('Please enter valid numbers for rows and columns.');
-            return;
-        }
-        let tableCode='<table border="1" style="width:100%; border-collapse:collapse; border-color:#ccc;">';
-        for(let row=0;row<numRows;row++){
-            tableCode+='<tr>';
-            for(let col=0;col<numCols;col++){
-                tableCode+='<td contenteditable="true">&nbsp;</td>';
-            }
-            tableCode+='</tr>';
-        }
-        tableCode+='</table>';
-        this.formatText('insertHTML',tableCode);
+        // const numRows=parseInt(prompt('Number of rows:'),10);
+        // const numCols=parseInt(prompt('Number of columns:'),10);
+        // if(isNaN(numRows)||isNaN(numCols)||numRows<1||numCols<1){
+        //     alert('Please enter valid numbers for rows and columns.');
+        //     return;
+        // }
+        // let tableCode='<table border="1" style="width:100%; border-collapse:collapse; border-color:#ccc;">';
+        // for(let row=0;row<numRows;row++){
+        //     tableCode+='<tr>';
+        //     for(let col=0;col<numCols;col++){
+        //         tableCode+='<td contenteditable="true">&nbsp;</td>';
+        //     }
+        //     tableCode+='</tr>';
+        // }
+        // tableCode+='</table>';
+        // this.formatText('insertHTML',tableCode);
+  const rows=prompt("Enter number of rows:", 2);
+  const cols=prompt("Enter number of columns:", 2);
+ 
+  if(rows>0&&cols>0){
+    let table="<table border='1' style='border-collapse:collapse; margin:10px 0;'>";
+    for(let r=0;r<rows;r++) {
+      table+="<tr>";
+      for(letc=0;c<cols;c++){
+        table +="<td style='padding:8px; min-width:80px; text-align:center;'>Cell</td>";
+      }
+      table +="</tr>";
     }
-
-    clearContent(){
+    table +="</table>";
+ 
+    // editor.focus();
+    document.execCommand("insertHTML", false, table);
+  }
+    }
+ clearContent(){
         if(confirm('Clear all content? This cannot be undone.')){
-            this.contentArea.innerHTML='<p>Start crafting your document here...</p>';
+            this.contentArea.innerHTML='';
             this.contentArea.focus();
         }
     }
@@ -125,7 +141,7 @@ class DocEditor{
     }
 
     handleEditorClick(event){
-        const wrapper=event.target.closest('.image-wrapper');
+        const wrapper=event.target.closest('.image-wrapper, .table-wrapper');
         if(wrapper){
             if(this.activeWrapper){
                 this.removeResizeHandle(this.activeWrapper);
@@ -173,10 +189,11 @@ class DocEditor{
             const dy=e.clientY-startY;
             let newWidth=startWidth+dx;
             let newHeight=newWidth/aspectRatio;
-            if(newWidth>20 && newHeight>20){  
+              newWidth=Math.max(50,Math.min(newWidth,800));
+              newHeight=newWidth/aspectRatio;
                 img.style.width=`${newWidth}px`;
                 img.style.height=`${newHeight}px`;
-            }
+            
         };
 
         const onMouseUp=()=>{
