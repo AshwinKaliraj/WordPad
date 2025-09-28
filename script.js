@@ -6,5 +6,15 @@ class doceditor{
         document.execCommand(cmd,false,val);
         this.contentarea.focus();
     }
+    changesize(size){
+    if(size){
+        this.formatText('fontSize',size);
+    }
+}
+changeFont(font){
+    if(font){
+        this.formatText('fontName',font);
+    }
+}
 }
 const doceditor= new doceditor('content-editor');
