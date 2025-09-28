@@ -120,5 +120,78 @@ class DocEditor{
             this.contentArea.focus();
         }
     }
+     getEditorContent(){
+        return this.contentArea.innerHTML;
+    }
 
+    handleEditorClick(event){
+        const wrapper=event.target.closest('.image-wrapper');
+        if(wrapper){
+            if(this.activeWrapper){
+                this.removeResizeHandle(this.activeWrapper);
+            }
+            this.activeWrapper=wrapper;
+            this.addResizeHandle(wrapper);
+            wrapper.classList.add('selected');
+        }else if(this.activeWrapper){
+            this.removeResizeHandle(this.activeWrapper);
+            this.activeWrapper.classList.remove('selected');
+            this.activeWrapper=null;
+        }
+    }
+
+    addResizeHandle(wrapper){
+        if(!wrapper.querySelector('.resize-handle')){
+            const handle=document.createElement('div');
+            handle.className='resize-handle';
+            wrapper.appendChild(handle);
+            handle.addEventListener('mousedown',this.startResize.bind(this));
+        }
+    }
+
+    removeResizeHandle(wrapper){
+        const handle=wrapper.querySelector('.resize-handle');
+        if (handle){
+            handle.removeEventListener('mousedown',this.startResize.bind(this));
+            handle.remove();
+        }
+    }
+
+        startResize(e){
+        e.preventDefault();
+        const img=this.activeWrapper.querySelector('img');
+        if(!img)return;
+        
+        let startX=e.clientX;
+        let startY=e.clientY;
+        let startWidth=img.offsetWidth;
+        let startHeight=img.offsetHeight;
+        let aspectRatio=startWidth/startHeight;
+
+        const onMouseMove=(e)=>{
+            const dx=e.clientX-startX;
+            const dy=e.clientY-startY;
+            let newWidth=startWidth+dx;
+            let newHeight=newWidth/aspectRatio;
+            if(newWidth>20 && newHeight>20){  
+                img.style.width=`${newWidth}px`;
+                img.style.height=`${newHeight}px`;
+            }
+        };
+
+        const onMouseUp=()=>{
+            document.removeEventListener('mousemove',onMouseMove);
+            document.removeEventListener('mouseup',onMouseUp);
+        };
+
+        document.addEventListener('mousemove',onMouseMove);
+        document.addEventListener('mouseup',onMouseUp);
+    }
 }
+
+
+
+const docEditor=new DocEditor('content-editor');
+
+
+
