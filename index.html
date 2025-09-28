@@ -3,7 +3,11 @@
     <head>
         <meta charset="utf-8">
         <title>Ashwin's WordPad</title>
+         <link rel="icon" type="image/png" href="image copy 4.png">
         <link rel="stylesheet"href="styles.css">
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+          <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.js" defer></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" defer></script>
     </head>
     <body>
       
@@ -56,8 +60,8 @@
             </div>
             
             <div class="tool-group">
-                <button onclick="docEditor.insertHyperlink()" title="Insert Link">🌐</button>
-                <button onclick="docEditor.insertLocalImage()" title="Upload Image">🖼️</button>
+                <button onclick="docEditor.insertHyperlink()" title="Insert Link">InsertLink</button>
+                <button onclick="docEditor.insertLocalImage()" title="Upload Image">UploadImage</button>
                 <button onclick="docEditor.insertImageUrl()" title="Image URL">📷</button>
                 <button onclick="docEditor.insertGrid()" title="Insert Table">▦</button>
             </div>
