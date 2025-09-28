@@ -13,59 +13,75 @@
             <p>Write, format, and export documents seamlessly.</p>
         </header>
         
-      
-        
-        <div id="toolbar"class="toolbar">
-            <button onclick="doceditor.formattext('bold')"title="Bold"><b>B</b></button>
-            <button onclick="doceditor.formattext('italic')"title="Italic"><i>I</i></button>
-            <button onclick="doceditor.formattext('underline')"title="Underline"><u>U</u></button>
-            <select onchange="doceditor.changesize(this.value)"title="Font Size">
-                <option value="">Size</option>
-                <option value="1">4</option>
-                <option value="2">6</option>
-                <option value="3">8</option>
-                <option value="4">10</option>
-                <option value="5">14</option>
-                <option value="6">20</option>
-                <option value="7">30</option>
-
-            </select>
-            <select onchange="docEditor.changefont(this.value)"title="Font Style">
-                   <option value="">Font</option>
-                   <option value="Arial, sans-serif">Arial</option>
-                   <option value="'Times New Roman', serif">Times</option>
-                   <option value="'Courier New', monospace">Courier</option>
-                   <option value="Helvetica, sans-serif">Helvetica</option>
-                   <option value="Georgia, serif">Georgia</option>
-                   <option value="Verdana, sans-serif">Verdana</option>
-
-            </select>
-            <div><button onclick="doceditor.align('left')" title="Align Left">🡸</button>
-            <button onclick="doceditor.align('center')" title="Align Center">🡺🡸</button>
-            <button onclick="doceditor.align('right')" title="Align Right">🡺</button>
-            <button onclick="doceditor.align('justify')" title="Justify">☰</button></div>
-             <input type="color" onchange="doceditor.colortext(this.value)" title="Text Color">
-             <input type="color" onchange="doceditor.highlighttext(this.value)" title="Highlight">
-             <button onclick="doceditor.formattext('insertOrderedList')" title="Numbered List">1.</button>
-             <button onclick="doceditor.formattext('insertUnorderedList')" title="Bullet List">•</button>
-             <button onclick="doceditor.formattext('outdent')" title="Outdent">⮜</button>
-             <button onclick="doceditor.formattext('indent')" title="Indent">⮞</button>
-             <button onclick="doceditor.inserthyperlink()" title="Insert Link">🌐</button>
-             <button onclick="doceditor.insertlocalimage()" title="Upload Image">🖼️</button>
-             <button onclick="doceditor.insertimageurl()" title="Image URL">📷</button>
-             <button onclick="doceditor.insertgrid()" title="Insert Table">▦</button>
-             <button onclick="docEditor.clearContent()" title="Reset Editor">🔄</button>
-             <input type="text" id="document-title" placeholder="Document Title">
-             <input type="text" id="document-author" placeholder="Author Name">
-             <button onclick="docexporter.exportpdf()" title="Export to PDF">&#128220; PDF</button>
-             <button onclick="docexporter.exportdoc()" title="Export to DOC">📝 DOC</button> 
-       
+      <div id="toolbar"class="toolbar">
+            <div class="tool-group">
+                <select onchange="docEditor.changeFont(this.value)" title="Font Style">
+                    <option value="">Font</option>
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="'Times New Roman', serif">Times</option>
+                    <option value="'Courier New', monospace">Courier</option>
+                </select>
+                <select onchange="docEditor.changeSize(this.value)" title="Font Size">
+                    <option value="">Size</option>
+                    <option value="1">4</option>
+                    <option value="2">6</option>
+                    <option value="3">8</option>
+                    <option value="4">12</option>
+                    <option value="5">16</option>
+                    <option value="6">25</option>
+                    <option value="7">32</option>
+                </select>
+            </div>
+            
+            <div class="tool-group">
+                <button onclick="docEditor.formatText('bold')" title="Bold"><b>B</b></button>
+                <button onclick="docEditor.formatText('italic')" title="Italic"><i>I</i></button>
+                <button onclick="docEditor.formatText('underline')" title="Underline"><u>U</u></button>
+            </div>
+            
+            <div class="tool-group">
+                <input type="color" onchange="docEditor.highlightText(this.value)" title="Highlight">
+                <input type="color" onchange="docEditor.colorText(this.value)" title="Text Color">
+            </div>
+            
+            <div class="tool-group">
+                <button onclick="docEditor.align('left')" title="Align Left">🡸</button>
+                <button onclick="docEditor.align('center')" title="Align Center">🡺🡸</button>
+                <button onclick="docEditor.align('right')" title="Align Right">🡺</button>
+                <button onclick="docEditor.align('justify')" title="Justify">☰</button>
+            </div>
+            
+            <div class="tool-group">
+                <button onclick="docEditor.formatText('insertUnorderedList')" title="Bullet List">•</button>
+                <button onclick="docEditor.formatText('insertOrderedList')" title="Numbered List">1.</button>
+                <button onclick="docEditor.formatText('outdent')" title="Outdent">⮜</button>
+                <button onclick="docEditor.formatText('indent')" title="Indent">⮞</button>
+            </div>
+            
+            <div class="tool-group">
+                <button onclick="docEditor.insertHyperlink()" title="Insert Link">🌐</button>
+                <button onclick="docEditor.insertLocalImage()" title="Upload Image">🖼️</button>
+                <button onclick="docEditor.insertImageUrl()" title="Image URL">📷</button>
+                <button onclick="docEditor.insertGrid()" title="Insert Table">▦</button>
+            </div>
+            
+            <div class="tool-group">
+                <button onclick="docEditor.clearContent()" title="Reset Editor">🔄</button>
+            </div>
+            
+            <div class="tool-group export-tools">
+                <input type="text" id="document-title" placeholder="Document Title">
+                <input type="text" id="document-author" placeholder="Author Name">
+                <button onclick="docExporter.exportPdf()" title="Export to PDF">&#128220; PDF</button>
+                <button onclick="docExporter.exportDoc()" title="Export to DOC">📝 DOC</button>
             </div>
         </div>
-          <div id="content-editor" contenteditable="true">
-            
-            <p>Start your work here...</p>
+        
+        <div id="content-editor" contenteditable="true">
+            <p>Start crafting your document here...</p>
         </div>
+        
+        <input type="file" id="image-upload" accept="image/*" style="display: none;">
     </div>
       <footer>
     <p>Created by Ashwin :)</p>
