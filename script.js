@@ -1,20 +1,25 @@
-class doceditor{
-    constructor(editorid){
-        this.contentarea=document.getElementById(editorid);
+class DocEditor{
+    constructor(editorId){
+        this.contentArea=document.getElementById(editorId);
+        this.contentArea.focus(); 
+        this.activeWrapper=null;
+
+        this.imageInput=document.getElementById('image-upload');
+        this.imageInput.addEventListener('change',this.handleImageUpload.bind(this));
+
+        this.contentArea.addEventListener('click',this.handleEditorClick.bind(this));
     }
-    formattext(cmd,va=null){
+
+    formatText(cmd,val=null){
         document.execCommand(cmd,false,val);
-        this.contentarea.focus();
+        this.contentArea.focus();
     }
-    changesize(size){
-    if(size){
-        this.formatText('fontSize',size);
+
+    changeSize(size){
+        if (size){
+            this.formatText('fontSize',size);
+        }
     }
+
+
 }
-changeFont(font){
-    if(font){
-        this.formatText('fontName',font);
-    }
-}
-}
-const doceditor= new doceditor('content-editor');
