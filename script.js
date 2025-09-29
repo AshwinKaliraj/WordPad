@@ -6,8 +6,10 @@ class DocEditor{
         
         this.imageInput=document.getElementById('image-upload');
         this.imageInput.addEventListener('change',this.handleImageUpload.bind(this));
+        this.contentArea.addEventListener('input', this.autoSave.bind(this));
         
         this.contentArea.addEventListener('click',this.handleEditorClick.bind(this));
+        this.loadFromLocalStorage();
     }
     formatText(cmd,val=null){
         document.execCommand(cmd,false,val);
@@ -59,6 +61,7 @@ class DocEditor{
         }else if(url){
             alert('Please enter a valid image URL (jpg, png, or gif).');
         }
+        const html=`<div class="resizeable-container">${table}</div><br/>`;
     }
 
       handleImageUpload(event){
@@ -89,13 +92,18 @@ class DocEditor{
             alert('Error reading image file.Try another.');
         };
         reader.readAsDataURL(file);
+        
     }
-     insertResizableImage(src){
-        const wrapperHtml =`<div class="image-wrapper"><img src="${src}" style="width: auto; height: auto;"></div>`;
-        this.formatText('insertHTML',wrapperHtml);
-    }
+insertResizableImage(src){
+    const wrapperHtml = `
+        <div class="image-wrapper resizeable-container">
+            <img src="${src}" class="resizable-img">
+        </div>`;
+    this.formatText('insertHTML', wrapperHtml);
+}
 
-    insertGrid(){
+
+    // insertGrid(){
         // const numRows=parseInt(prompt('Number of rows:'),10);
         // const numCols=parseInt(prompt('Number of columns:'),10);
         // if(isNaN(numRows)||isNaN(numCols)||numRows<1||numCols<1){
@@ -112,24 +120,25 @@ class DocEditor{
         // }
         // tableCode+='</table>';
         // this.formatText('insertHTML',tableCode);
-  const rows=prompt("Enter number of rows:", 2);
-  const cols=prompt("Enter number of columns:", 2);
- 
-  if(rows>0&&cols>0){
-    let table="<table border='1' style='border-collapse:collapse; margin:10px 0;'>";
-    for(let r=0;r<rows;r++) {
-      table+="<tr>";
-      for(letc=0;c<cols;c++){
-        table +="<td style='padding:8px; min-width:80px; text-align:center;'>Cell</td>";
-      }
-      table +="</tr>";
+ insertGrid(){
+        const rows = prompt("Enter number of rows:", 2);
+        const cols = prompt("Enter number of columns:", 2);
+        if (rows > 0 && cols > 0) {
+            let table = "<table border='1' style='border-collapse:collapse; margin:10px 0; table-layout:fixed; width:80%;'>"; // Fixed layout and 80% width
+            for (let r = 0; r < rows; r++) {
+                table += "<tr>";
+                for (let c = 0; c < cols; c++) {
+                    table += "<td style='padding:8px; min-width:80px; text-align:center; word-break:break-all;'>Cell</td>"; // break-all to prevent expansion
+                }
+                table += "</tr>";
+            }
+            table += "</table>";
+            const html=`<div class="resizeable-container">${table}</div><br/>`;
+            this.formatText('insertHTML', html); // Insert table
+        }
     }
-    table +="</table>";
- 
-    // editor.focus();
-    document.execCommand("insertHTML", false, table);
-  }
-    }
+    
+
  clearContent(){
         if(confirm('Clear all content? This cannot be undone.')){
             this.contentArea.innerHTML='';
@@ -139,7 +148,65 @@ class DocEditor{
      getEditorContent(){
         return this.contentArea.innerHTML;
     }
+    toggleMode(){
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('mode',document.body.classList.contains('dark-mode')?'dark':'light');
+    }
+    copyPlainText() {
+        const text = this.contentArea.innerText; 
+        navigator.clipboard.writeText(text).then(() => {
+            alert('Copied plain text!');
+        }).catch(() => {
+            alert('Failed to copy plain text.');
+        });
+    }
 
+    copyHTML() {
+        const html = this.getEditorContent(); 
+        navigator.clipboard.writeText(html).then(() => {
+            alert('Copied HTML!');
+        }).catch(() => {
+            alert('Failed to copy HTML.');
+        });
+    }
+    autoSave(){
+        localStorage.setItem('editorContent',this.getEditorContent());
+    }
+    
+    indent(){
+        this.formatText('indent');
+    }
+
+    outdent(){
+        this.formatText('outdent');
+    }
+    previewContent(){
+        const previewDiv=document.createElement('div');
+        previewDiv.id='preview';
+        previewDiv.innerHTML=this.getEditorContent();
+        previewDiv.style.position='fixed';
+        previewDiv.style.top='0';
+        previewDiv.style.left='0';
+        previewDiv.style.width='100%';
+        previewDiv.style.height='100%';
+        previewDiv.style.background='rgba(0,0,0,0.8)';
+        previewDiv.style.color='#fff';
+        previewDiv.style.padding='20px';
+        previewDiv.style.overflow='auto';
+        previewDiv.style.zIndex='9999';
+        previewDiv.style.boxSizing='border-box';
+        previewDiv.addEventListener('click',()=>previewDiv.remove()); 
+        document.body.appendChild(previewDiv);
+    }
+    findAndReplace(){
+        const findText= prompt('Enter text to find:');
+        const replaceText=prompt('Enter replacement text:');
+        if(findText&&replaceText){
+            const content=this.getEditorContent();
+            const newContent=content.replace(new RegExp(findText,'g'),replaceText);
+            this.contentArea.innerHTML=newContent;
+        }
+    }
     handleEditorClick(event){
         const wrapper=event.target.closest('.image-wrapper, .table-wrapper');
         if(wrapper){
@@ -203,6 +270,16 @@ class DocEditor{
 
         document.addEventListener('mousemove',onMouseMove);
         document.addEventListener('mouseup',onMouseUp);
+    }
+    loadFromLocalStorage() {
+        const savedContent = localStorage.getItem('editorContent');
+        if (savedContent) {
+            this.contentArea.innerHTML = savedContent;
+        }
+        const mode = localStorage.getItem('mode');
+        if (mode==='dark') {
+            document.body.classList.add('dark-mode');
+        }
     }
 }
 
