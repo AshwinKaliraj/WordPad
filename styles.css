@@ -7,13 +7,15 @@ body{
     color:black;
     line-height: 1.6;
     transition: background-color 0.3s, color 0.3s;
+    
+   
 }
 #content-editor{
     min-height: 480px;
     padding: 20px;
     border: 1px azure;
     border-radius: 10px;
-    background-color: whitesmoke;
+    background-color: #dcd5d5;
     outline: none;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     transition: border-color 0.3s;
@@ -38,11 +40,14 @@ body{
     flex-wrap: wrap;
     gap: 15px;
     padding: 15px;
-    /* background: black; */
     border-radius:10px;
     margin-bottom: 30px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     margin-top: 10px;
+     position: sticky;   
+    top: 0;            
+    background:#dcd5d5;  
+    z-index: 1000;
 
 }
 header {
@@ -160,6 +165,7 @@ body.dark-mode .toolbar input[type="text"]{
     resize: both;
     overflow: auto;
     max-width: 100%;
+    position: relative;
     border: 1px white;
 }
 .resizeable-container table {
@@ -168,9 +174,28 @@ body.dark-mode .toolbar input[type="text"]{
 }
 
 .resizable-img {
-    width: 100%;       
+    width: 100%;         
     height: 100%;
     object-fit: contain;  
     display: block;
 
+}
+#notification-container .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    max-width: 300px;
+    text-align: center;
+    opacity: 0; 
+    transition: opacity 0.3s ease-in-out; 
+}
+
+#notification-container .notification.show {
+    opacity: 1; 
 }
