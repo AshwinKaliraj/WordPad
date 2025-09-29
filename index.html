@@ -1,23 +1,29 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Ashwin's WordPad</title>
-         <link rel="icon" type="image/png" href="image copy 4.png">
-        <link rel="stylesheet"href="styles.css">
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
-          <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.js" defer></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" defer></script>
-    </head>
-    <body>
-      
-
-    <header class="header">
-      <h1>Word Pad Editor</h1>
-    </header>
-    
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Ashwin's WordPad</title>
+    <link rel="icon" type="image/png" href="image copy 4.png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Word Pad Editor</h1>
+        </header>
         
-      <div id="toolbar"class="toolbar">
+        <div id="ribbon" class="toolbar">
+            <div id="notification-container"></div> 
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="docEditor.closeModal()">&times;</span>
+            <div id="modal-body"></div>
+            <button onclick="docEditor.submitModal()">Submit</button>
+        </div>
+    </div> 
             <div class="tool-group">
                 <select onchange="docEditor.changeFont(this.value)" title="Font Style">
                     <option value="">Font</option>
@@ -46,29 +52,29 @@
             <div class="tool-group">
                 <input type="color" onchange="docEditor.highlightText(this.value)" title="Highlight">
                 <input type="color" onchange="docEditor.colorText(this.value)" title="Text Color">
-                <button onclick="docEditor.align('left')" title="Align Left">Align left</button>
+                <button onclick="docEditor.align('left')" title="Align Left">Align Left</button>
                 <button onclick="docEditor.align('center')" title="Align Center">Align Center</button>
                 <button onclick="docEditor.align('right')" title="Align Right">Align Right</button>
                 <button onclick="docEditor.align('justify')" title="Justify">☰</button>
-                <button onclick="docEditor.formatText('insertOrderedList')" title="Numbered List">OrderedList</button>
-                <button onclick="docEditor.formatText('insertUnorderedList')" title="Bullet List">UnorderedList</button>
-                 <button onclick="docEditor.formatText('outdent')" title="Outdent">⮜</button>
-                <button onclick="docEditor.formatText('indent')" title="Indent">⮞</button> 
+                <button onclick="docEditor.formatText('insertOrderedList')" title="Numbered List">Ordered List</button>
+                <button onclick="docEditor.formatText('insertUnorderedList')" title="Bullet List">Unordered List</button>
+                <button onclick="docEditor.formatText('outdent')" title="Outdent">⮜</button>
+                <button onclick="docEditor.formatText('indent')" title="Indent">⮞</button>
             </div>
             
             <div class="tool-group">
-                <button onclick="docEditor.insertHyperlink()" title="Insert Link">InsertLink</button>
-                <button onclick="docEditor.insertLocalImage()" title="Upload Image">UploadImage</button>
-                <button onclick="docEditor.insertImageUrl()" title="Image URL"> ImgLink</button>
-                <button onclick="docEditor.insertGrid()" title="Insert Table">Table▦</button>
+                <button onclick="docEditor.openModal('link')" title="Insert Link">Insert Link</button>
+                <button onclick="docEditor.insertLocalImage()" title="Upload Image">Upload Image</button>
+                <button onclick="docEditor.openModal('image')" title="Image URL">Img Link</button>
+                <button onclick="docEditor.openModal('table')" title="Insert Table">Table▦</button>
             </div>
             
             <div class="tool-group">
-                <button onclick="docEditor.clearContent()" title="Reset Editor">🔄Reset</button>
+                <button onclick="docEditor.clearContent()" title="Reset Editor">🔄 Reset</button>
                 <button onclick="docEditor.copyPlainText()" title="Copy Plain Text">Copy Plain</button>
                 <button onclick="docEditor.copyHTML()" title="Copy HTML">Copy HTML</button>
-                <button onclick="docEditor.findAndReplace()" title="Find & Replace">Find & Replace</button> 
-                <button onclick="docEditor.previewContent()" title="Preview">Preview</button> 
+                <button onclick="docEditor.findAndReplace()" title="Find & Replace">Find & Replace</button>
+                <button onclick="docEditor.previewContent()" title="Preview">Preview</button>
                 <button onclick="docEditor.toggleMode()" title="Toggle Mode">🌙 Theme</button>
             </div>
             
@@ -80,15 +86,19 @@
             </div>
         </div>
         
-        <div id="content-editor" contenteditable="true">
+        <div id="content-editor-wrapper">
+            <div id="content-editor" contenteditable="true">
+                <div class="page" data-page="1">
+                </div>
+            </div>
         </div>
         
         <input type="file" id="image-upload" accept="image/*" style="display: none;">
     </div>
-      <footer>
-    <p>Created by Ashwin :)</p>
-</footer>
-   <script src="script.js"></script>
-    </body>
-  
+    <footer>
+        <p>Created by Ashwin :)</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
 </html>
