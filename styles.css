@@ -20,6 +20,7 @@ body{
     position: relative;
     overflow: auto;
     max-height: 550px;
+    margin-top: -28px;
     
 }
 #content-editor img {
@@ -36,11 +37,11 @@ body{
     flex-wrap: wrap;
     gap: 15px;
     padding: 15px;
-    background: whitesmoke;
+    /* background: black; */
     border-radius:10px;
     margin-bottom: 30px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    margin-top: -30px;
+    margin-top: 10px;
 
 }
 header {
@@ -73,7 +74,7 @@ footer {
     font-size: 14px;
     border: none;
     border-radius: 4px;
-    background-color: green;
+    background-color: lightseagreen;
     color: white;
     cursor: pointer;
 }
@@ -85,7 +86,7 @@ footer {
     font-size: 14px;
     border: none;
     border-radius: 4px;
-    background-color: green;
+    background-color: lightseagreen;
     color:aliceblue;
     cursor: pointer;
 }
@@ -116,5 +117,4 @@ footer {
 #content-editor.image-wrapper.selected{
     border: 1px lightblue;
     box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
-}
-
+} 
